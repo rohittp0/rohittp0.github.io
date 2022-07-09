@@ -6,11 +6,11 @@ import * as BufferGeometryUtils from "./jsm/utils/BufferGeometryUtils.js";
 
 let container;
 
-export const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
-export const scene = new THREE.Scene();
-export const renderer = new THREE.WebGLRenderer( { antialias: true } );
+const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
+const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
 
-const controls = new FirstPersonControls( camera, renderer.domElement );
+let controls;
 
 const worldWidth = 128, worldDepth = 128;
 const worldHalfWidth = worldWidth / 2;
@@ -131,6 +131,8 @@ export function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     container.appendChild( renderer.domElement );
 
+    controls = new FirstPersonControls( camera, renderer.domElement );
+
     controls.movementSpeed = 1000;
     controls.lookSpeed = 0.125;
     controls.lookVertical = true;
@@ -195,3 +197,5 @@ function render() {
     renderer.render( scene, camera );
 
 }
+
+export { camera, controls, scene, renderer };
