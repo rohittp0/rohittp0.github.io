@@ -6,7 +6,11 @@ import * as BufferGeometryUtils from "./jsm/utils/BufferGeometryUtils.js";
 
 let container;
 
-let camera, controls, scene, renderer;
+export const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
+export const scene = new THREE.Scene();
+export const renderer = new THREE.WebGLRenderer( { antialias: true } );
+
+const controls = new FirstPersonControls( camera, renderer.domElement );
 
 const worldWidth = 128, worldDepth = 128;
 const worldHalfWidth = worldWidth / 2;
@@ -19,10 +23,8 @@ export function init() {
 
     container = document.getElementById( 'container' );
 
-    camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
     camera.position.y = getY( worldHalfWidth, worldHalfDepth ) * 100 + 100;
 
-    scene = new THREE.Scene();
     scene.background = new THREE.Color( 0xbfd1e5 );
 
     // sides
@@ -125,12 +127,9 @@ export function init() {
     directionalLight.position.set( 1, 1, 0.5 ).normalize();
     scene.add( directionalLight );
 
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     container.appendChild( renderer.domElement );
-
-    controls = new FirstPersonControls( camera, renderer.domElement );
 
     controls.movementSpeed = 1000;
     controls.lookSpeed = 0.125;
@@ -196,5 +195,3 @@ function render() {
     renderer.render( scene, camera );
 
 }
-
-export { camera, controls, scene, renderer };
