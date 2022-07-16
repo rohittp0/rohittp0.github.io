@@ -5,8 +5,33 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        #info {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1; /* TODO Solve this in HTML */
+            color: #fff;
+            font-family: Monospace,serif;
+            font-size: 13px;
+            line-height: 24px;
+        }
+    </style>
 </head>
 <body>
     <div id="container"></div>
+    <div id="info">
+        Look around to find spinning cubes...<br>
+
+        Note: Use scroll to zoom and arrow keys to move
+    </div>
 </body>
 </html>
