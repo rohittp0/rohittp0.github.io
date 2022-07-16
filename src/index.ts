@@ -44,7 +44,7 @@ renderer.domElement.addEventListener('click', function(event){
 }, false)
 
 function clicked(object){
-    window.location.href = object.name;
+    window.location.href = `pages/${object.name}`;
 }
 
 function render() {
