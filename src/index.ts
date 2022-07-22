@@ -1,8 +1,8 @@
 import "./styles.css";
 
 import * as THREE from "three";
-import TrackballControls from "three-trackballcontrols";
-import {CSS3DRenderer, CSS3DObject} from "./CSS3DRenderer.js";
+import {TrackballControls} from "./jsm/controls/TrackballControls.js";
+import {CSS3DRenderer, CSS3DObject} from "./jsm/renderers/CSS3DRenderer.js";
 
 let camera, scene, renderer;
 let controls;
@@ -19,7 +19,9 @@ function Element( src, x, y, z, ry ) {
     iframe.src = "https://"+ src;
     div.appendChild( iframe );
     const object = new CSS3DObject( div );
+    // @ts-ignore
     object.position.set( x, y, z );
+    // @ts-ignore
     object.rotation.y = ry;
     return object;
 }
@@ -37,11 +39,11 @@ function init() {
 
     const group = new THREE.Group();
     group.add(Element( "rohittp.com/pages", 0, 0, 240, 0 ) );
-    group.add(Element( "github.com/rohittp0", 240, 0, 0, Math.PI / 2 ) );
-    group.add(Element( "stackoverflow.com/users/10182024/rohit", 0, 0, - 240, Math.PI ) );
-    group.add(Element( "linkedin.com/in/rohit-tp", - 240, 0, 0, - Math.PI / 2 ) );
+    group.add(Element( "rohit.cusat.me/github", 240, 0, 0, Math.PI / 2 ) );
+    group.add(Element( "rohit.cusat.me/stackoverflow", 0, 0, - 240, Math.PI ) );
+    group.add(Element( "trebuchet.one", - 240, 0, 0, - Math.PI / 2 ) );
     scene.add( group );
-    controls = new TrackballControls( camera );
+    controls = new TrackballControls( camera, container );
     controls.rotateSpeed = 4;
     window.addEventListener( "resize", onWindowResize, false );
 

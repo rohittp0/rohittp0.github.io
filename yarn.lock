@@ -2807,11 +2807,6 @@ terser@^5.10.0, terser@^5.7.2:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-three-trackballcontrols@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/three-trackballcontrols/-/three-trackballcontrols-0.9.0.tgz#2c8be3627f50644d6dd60c10d23edd7fbfeffadd"
-  integrity sha512-Z6HmIJnP70r5uONvcPCdLEF0SsG1kbGzNb7qQYj3c7b6v2E3XTlbNpZsgTjt36oKm0Z2tU11D6EbW4i8KIHuqA==
-
 three@^0.142.0:
   version "0.142.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.142.0.tgz#89e226a16221f212eb1d40f0786604b711f28aed"
