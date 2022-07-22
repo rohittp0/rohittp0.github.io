@@ -1,68 +1,67 @@
 import "./styles.css";
 
 import * as THREE from "three";
+import TrackballControls from "three-trackballcontrols";
+import {CSS3DRenderer, CSS3DObject} from "./CSS3DRenderer.js";
 
-import {camera, scene, renderer, init} from "./world.js";
+let camera, scene, renderer;
+let controls;
 
-const menus = ["skills", "experiences", "education"];
-
-function createNavigationCubes() {
-    return menus.map((menu, i) =>
-    {
-        const material = Array(6).fill(`textures/cube/${menu}.png`)
-            .map((img) => new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( img ) } ));
-
-        const box = new THREE.BoxGeometry( 100, 100, 100 );
-        const mesh =  new THREE.Mesh( box, material );
-
-        mesh.name = menu;
-        const x = 700*Math.round(i-menus.length/2);
-        const z = 700*Math.round(i-menus.length/2)
-        mesh.position.set(x, 150, z);
-
-        return mesh;
-    });
+function Element( src, x, y, z, ry ) {
+    const div = document.createElement( "div" );
+    div.style.width = "480px";
+    div.style.height = "360px";
+    div.style.backgroundColor = "#000";
+    const iframe = document.createElement( "iframe" );
+    iframe.style.width = "480px";
+    iframe.style.height = "360px";
+    iframe.style.border = "0px";
+    iframe.src = "https://"+ src;
+    div.appendChild( iframe );
+    const object = new CSS3DObject( div );
+    object.position.set( x, y, z );
+    object.rotation.y = ry;
+    return object;
 }
 
-renderer.domElement.addEventListener('click', function(event){
-    const bounds = renderer.domElement.getBoundingClientRect();
-    const rayCaster = new THREE.Raycaster();
+function init() {
+    const container = document.getElementById( "container" );
+    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
+    camera.position.set( 500, 350, 750 );
+    scene = new THREE.Scene();
+    renderer = new CSS3DRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.domElement.style.position = "absolute";
+    renderer.domElement.style.top = 0;
+    container.appendChild( renderer.domElement );
 
+    const group = new THREE.Group();
+    group.add(Element( "rohittp.com/pages", 0, 0, 240, 0 ) );
+    group.add(Element( "github.com/rohittp0", 240, 0, 0, Math.PI / 2 ) );
+    group.add(Element( "stackoverflow.com/users/10182024/rohit", 0, 0, - 240, Math.PI ) );
+    group.add(Element( "linkedin.com/in/rohit-tp", - 240, 0, 0, - Math.PI / 2 ) );
+    scene.add( group );
+    controls = new TrackballControls( camera );
+    controls.rotateSpeed = 4;
+    window.addEventListener( "resize", onWindowResize, false );
 
-    const mouse = {x: 0, y: 0};
-
-    mouse.x = ( (event.clientX - bounds.left) / renderer.domElement.clientWidth ) * 2 - 1;
-    mouse.y = - ( (event.clientY - bounds.top) / renderer.domElement.clientHeight ) * 2 + 1;
-
-    rayCaster.setFromCamera( mouse, camera );
-    const intersects = rayCaster.intersectObjects(scene.children, true)
-        .filter((int) => menus.includes(int.object.name));
-
-    if (intersects.length > 0) {
-        clicked(intersects[0].object);
-    }
-}, false)
-
-function clicked(object){
-    window.location.href = `pages#${object.name}`;
+    // Block iframe events when dragging camera
+    const blocker = document.getElementById( "blocker" );
+    blocker.style.display = "none";
+    document.addEventListener( "mousedown", function () { blocker.style.display = ""; } );
+    document.addEventListener( "mouseup", function () { blocker.style.display = "none"; } );
 }
 
-function render() {
-    requestAnimationFrame( render );
-
-    cubes.forEach((cube) => {
-        cube.rotateX(0.001);
-        cube.rotateY(0.001);
-        cube.rotateZ(0.001);
-    });
-
-    renderer.render(scene, camera);
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+function animate() {
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render( scene, camera );
 }
 
 init();
-
-const cubes = createNavigationCubes();
-
-cubes.forEach((cube) => scene.add(cube));
-
-render();
+animate();
