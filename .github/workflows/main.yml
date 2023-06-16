@@ -1,0 +1,23 @@
+# BEGIN: 7f6d5b8d2c7c
+name: deploy-workflow
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checks out repo
+        uses: actions/checkout@v2
+      - name: Create index.html files
+        run: find resources -type d -exec sh -c 'ls -1 "{}" | grep -v "index.html" > "{}/index.html"' \;
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: build # The branch name where you want to push the assets
+          FOLDER: . # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: {msg}" # The commit message
+# END: 7f6d5b8d2c7c
