@@ -1,44 +1,8 @@
-.block-object::before {
-    content: "{";
+body {
+    background-color: black;
+    padding: 0;
 }
 
-.block-object::after {
-    content: "}"
-}
-
-.block-object::after, .block-object::before {
-    display: block;
-    margin-left: -1rem;
-}
-
-.key::before, .value::before {
-    content: '"';
-}
-
-.key::after {
-    content: '":';
-}
-
-.value::after {
-    content: '",';
-}
-
-.block-object {
-    padding-left: 1rem;
-}
-
-.array::before {
-    content: "[";
-}
-
-.array::after {
-    content: "]";
-}
-
-
-.array {
-    padding-left: 1rem;
-    display: inline-flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+.terminal-scroller {
+    overflow-y: unset;
 }

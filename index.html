@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi 👋</title>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/jquery.terminal@2.x.x/js/jquery.terminal.min.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/jquery.terminal@2.x.x/css/jquery.terminal.min.css" />
     <link rel="stylesheet" href="css/index.css">
+
+    <script src="js/index.js" defer></script>
 </head>
+
 <body>
-    <div class="block-object">
-        <span class="key">Name</span>
-        <div class="array">
-            <span class="value">Rohit T P</span>
-            <div class="block-object">
-                
-            </div>
-        </div>
-    </div>
+    <template id="greetings">
+
+██╗  ██╗██╗    ██╗     █████╗ ███╗   ███╗    ██████╗  ██████╗ ██╗  ██╗██╗████████╗
+██║  ██║██║    ██║    ██╔══██╗████╗ ████║    ██╔══██╗██╔═══██╗██║  ██║██║╚══██╔══╝
+███████║██║    ██║    ███████║██╔████╔██║    ██████╔╝██║   ██║███████║██║   ██║   
+██╔══██║██║    ██║    ██╔══██║██║╚██╔╝██║    ██╔══██╗██║   ██║██╔══██║██║   ██║   
+██║  ██║██║    ██║    ██║  ██║██║ ╚═╝ ██║    ██║  ██║╚██████╔╝██║  ██║██║   ██║   
+╚═╝  ╚═╝╚═╝    ╚═╝    ╚═╝  ╚═╝╚═╝     ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝   
+                                                                                  
+Welcome to my portal :) Use help to findout what you can do here!
+    </template>
+    <template id="help">
+Available Commands:
+    ls - list all files
+    cd [path] - change directory
+    cat [file] - show file content            
+    </template>
+    <div id="terminal"></div>
 </body>
+
 </html>
