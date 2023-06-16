@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Create index.html files
         run: find resources -type d -exec sh -c 'ls -1 "{}" | grep -v "index.html" > "{}/index.html"' \;
+      - name: Make build directory
+        run: mkdir build
       - name: Copy everything except .github
         run: |
           rsync -av \
