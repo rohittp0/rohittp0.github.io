@@ -16,7 +16,7 @@ jobs:
         run: mkdir build
       - name: Copy everything except .github
         run: |
-          rsync -av \
+          rsync . -av \
             --exclude '.github' \
             --exclude 'README.md' \
             --exclude 'LICENSE' \
