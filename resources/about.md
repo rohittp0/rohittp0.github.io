@@ -1,0 +1,1 @@
+Im third year computer science student at school of engineering CUSAT. And Chief Technology Officer of Trebuchet, a startup that tries to bridge the gap between customer and online shopping using Augmented Reality and Machine Learning. The startup is currently incubated at Center for Innovation, Technology Transfer & Industry Collaboration (CITTIC), CUSAT

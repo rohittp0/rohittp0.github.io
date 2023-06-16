@@ -1,0 +1,8 @@
+body {
+    background-color: black;
+    padding: 0;
+}
+
+.terminal-scroller {
+    overflow-y: unset;
+}
