@@ -1,6 +1,8 @@
 path = "~"
 basePath = "resources"
 
+command_cache = {};
+
 getPath = () => path.replace("~", "") + "/";
 
 function resplvePath(oldPath, newPath) {
@@ -33,20 +35,31 @@ function help() {
 async function cd(newPath) {
     toPath = resplvePath(path.replace("~", ""), newPath) + "/";
 
+    if (command_cache.cd && command_cache.cd[toPath]) {
+        path = resplvePath(path, newPath);
+        return "";
+    }
+
     const response = await fetch(basePath + toPath);
+    command_cache.cd = (command_cache.cd || {})
 
     if (!response.ok)
-        if (response.status == 404)
+        if (response.status == 404) {
+            command_cache.cd[toPath] = false
             throw "cd: " + newPath + ": No such directory"
+        }
         else
-            throw "cd: " + newPath + ": " + (await response).statusText
+            throw "cd: " + newPath + ": " + response.statusText
 
- 
+    command_cache.cd[toPath] = true;
     path = resplvePath(path, newPath);
     return "";
 }
 
 async function ls() {
+    if (command_cache.ls && command_cache.ls[getPath()])
+        return command_cache.ls[getPath()];
+
     const response = await fetch(basePath + getPath());
 
     if (!response.ok)
@@ -55,11 +68,18 @@ async function ls() {
         else
             throw "ls: cannot access '" + getPath() + "': " + response.statusText
 
-    return await response.text();
+    command_cache.ls = command_cache.ls || {};
+    command_cache.ls[getPath()] = await response.text();
+
+    return command_cache.ls[getPath()];
 }
 
 async function cat(file) {
-    const response = await fetch(basePath + resplvePath(getPath(), file));
+    file_path = resplvePath(getPath(), file);
+    if (command_cache.cat && command_cache.cat[file_path])
+        return command_cache.cat[file_path];
+
+    const response = await fetch(basePath + file_path);
 
     if (!response.ok)
         if (response.status == 404)
@@ -67,7 +87,10 @@ async function cat(file) {
         else
             throw "cat: " + file + ": " + response.statusText
 
-    return response.text();
+    command_cache.cat = command_cache.cat || {};
+    command_cache.cat[file_path] = await response.text();
+
+    return command_cache.cat[file_path]
 }
 
 commandHandlers = {
